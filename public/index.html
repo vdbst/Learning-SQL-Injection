@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+        <!-- Compiled and minified JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+               
+    <title> SQL Learning Injection</title>
+    <script>
+        function aGet(query) {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', query);
+            xhr.onload = function() {
+                if (xhr.status !== 200) {
+                    document.getElementById("table").innerHTML = "An error occured. We're sad! 😭";
+                    return;
+                }
+                const rows = JSON.parse(xhr.response);
+                let innerHTML = '<table class="striped"><tr><th>Name</th><th>Stock</th><th>Price</th></tr>';
+                rows.forEach(row => {
+                    innerHTML += `<tr><td>${row.name}</td><td>${row.stock}</td><td>${row.price}</td></tr>`;
+                });
+                innerHTML += "</table>";
+                document.getElementById("table").innerHTML = innerHTML;
+
+            };
+            xhr.send();
+        }
+
+    </script>
+</head>
+<body onload="aGet('/hw?name=')">
+    <div class="input-field col s6" style="width:calc(100% - 200px); padding: 20px; display: inline-block;">
+        <input id="text" type="text" size="100" placeholder="Suchen" class="validate" onkeydown="event.key === 'Enter' && aGet('/hw?name=' + document.getElementById('text').value)"/>
+        <label for="text">Suchen</label>
+    </div>
+    <button class="waves-effect waves-light btn" onclick="aGet('/hw?name=' + document.getElementById('text').value)">GO!</button>
+    <div id="table">
+
+    </div>
+</body>
+</html>
