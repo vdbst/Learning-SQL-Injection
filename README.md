@@ -29,12 +29,12 @@ To run the demo:
 ## The bad code
 
 The /hw endpoint in the app.js builds the SQL query by simply concatenating
-the the query template (`SELECT ... LIKE '%`) with the user's input for filtering
+the query template (`SELECT ... LIKE '%`) with the user's input for filtering
 the result (`req.query.name`) and the end part of the SQL query (`%'`).
 
 ## What the developer wanted
 
-The SQL query which is the sent to the database server should look like:
+The SQL query which is sent to the database server should look like:
 
 ```
 SELECT
@@ -73,7 +73,7 @@ WHERE name LIKE '%something' OR 1=1 -- comment%'
 
 This will show all products even if they not have `something` in the name.
 
-Then `-- comment` part ensures, that everything after the double hyphen is ignored
+The `-- comment` part ensures, that everything after the double hyphen is ignored
 because it's a SQL comment.
 
 ## Be Creative
@@ -143,6 +143,9 @@ with user input
 
 becomes
 `SELECT name, stock, price FROM product WHERE name LIKE '%'; DROP TABLE USER -- --%'`
+
+As you can see, there is a second statement appended (`DROP TABLE USER`) which
+deletes the complete user table.
 
 
 ## The good code ... or: How to avoid them
