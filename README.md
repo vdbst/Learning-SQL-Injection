@@ -20,6 +20,7 @@ USE THE APP AT YOUR OWN RISK!
 To prepare this demo you need to do the following:
  - execute `npm install` (this will install mysql and express)
  - import `example-database.sql` into an empty MySQL database
+ - copy `db.js.example` to `db.js`
  - change `db.js` and enter you database config
 
 To run the demo:
